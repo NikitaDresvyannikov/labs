@@ -74,3 +74,23 @@ def task6():
     print('a2n=', a2n)
     
 task6()
+
+def task7():
+    
+    A1 = float(input('A1='))
+    B1 = float(input('B1='))
+    C1 = float(input('C1='))
+    A2 = float(input('A2='))
+    B2 = float(input('B2='))
+    C2 = float(input('C2='))
+    
+    if -10 <= A1 <= 10 and -10 <= A2 <= 10 and -10 <= B1 <= 10 and -10 <= B2 <= 10 and -10 <= C1 <= 10 and -10 <= C2 <= 10:
+        D = A1 * B2 - A2 * B1
+        x = (C1 * B2 - C2 * B1)/ D
+        y = (A1 * C2 - A2 * C1)/ D
+        print('x=', x)
+        print('y=', round(y, 4))
+    else:
+        print('Введите числа [-10;10]')
+        
+task7()
