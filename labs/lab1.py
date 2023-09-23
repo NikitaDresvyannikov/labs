@@ -26,6 +26,15 @@ def task2():
     
 task2()
 
+def task3():
+    
+    x = float(input('Произвольное x:'))
+    def f(x):
+        return (abs(math.log((math.cos(x**2))))) / (math.sin(x ** 2 + x ** 0.5))
+    print('f(x)=',f(x))
+    
+task3()
+
 def task4():
     
     a = float(input('Произвольное a:'))
