@@ -20,3 +20,14 @@ def task2():
         return (b*x + a)**2 / (c + x**3) + x**4
     print(f())
 task2()
+
+def task4():
+    a = float(input('Произвольное a:'))
+    b = float(input('Произвольное b:'))
+    c = float(input('Произвольное c:'))
+    if c == (a**2 + b**2)**0.5:
+        h = (a * b) / c
+        print('h=', h)
+    else:
+        print('Треугольник не существует')
+task4()
