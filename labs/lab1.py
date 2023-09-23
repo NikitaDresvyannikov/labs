@@ -11,3 +11,12 @@ def task1():
     print('a =', a)
     print('b =', b)
 task1()
+
+def task2():
+    a = -2
+    b = 5
+    c = 3
+    def f(x):
+        return (b*x + a)**2 / (c + x**3) + x**4
+    print(f())
+task2()
