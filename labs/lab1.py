@@ -31,3 +31,20 @@ def task4():
     else:
         print('Треугольник не существует')
 task4()
+
+def task5():
+    x1 = float(input('x1='))
+    y1 = float(input('y1='))
+    z1 = float(input('z1='))
+    x2 = float(input('x2='))
+    y2 = float(input('y2='))
+    z2 = float(input('z2='))
+    x3 = float(input('x3='))
+    y3 = float(input('y3='))
+    z3 = float(input('z3='))
+    F1 = [x1,y1,z1]
+    F2 = [x2,y2,z2]
+    F3 = [x3,y3,z3]
+    F = [x1+x2+x3,y1+y2+y3,z1+z2+z3]
+    print('F=', F)
+task5()
