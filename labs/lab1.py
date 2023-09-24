@@ -115,3 +115,12 @@ def task8():
         
 task8()
 
+def task9():
+    
+    x = float(input('Введите рубли:'))
+    y = float(input('Введите курс доллара:'))
+    z = float(input('Введите процент:'))
+    dollars = abs(x / y - ((x / y) * z / 100))
+    print('dollars = ', round(dollars, 4))
+    
+task9()
