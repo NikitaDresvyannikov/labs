@@ -1,13 +1,12 @@
 import math
 import numpy as np
 
-
 def task1():
-    x = float(input('Произвольное x:'))
+    x = float(input('Введите произвольное x\n'))
     'Ввод произвольного x'
-    y = float(input('Произвольное y:'))
+    y = float(input('Введите произвольное y\n'))
     'Ввод произвольного y'
-    z = float(input('Произвольное z:'))
+    z = float(input('Введите произвольное z\n'))
     'Ввод произвольного z'
 
     a = (3 + math.e ** 2) / (1 + x ** 2 * abs(y - math.tan(z)))
@@ -21,6 +20,13 @@ def task1():
     'Вывод значения b'
 
 
+try:
+    task1()
+except ZeroDivisionError:
+    print("делить на ноль нельзя")
+    exit(0)
+
+
 def task2():
     a = -2
     'Значение a из условия задания'
@@ -28,7 +34,7 @@ def task2():
     'Значение b из условия задания'
     c = 3
     'Значение c из условия задания'
-    x = float(input('Произвольное x:'))
+    x = float(input('Введите произвольное x\n'))
     'Ввод произвольного значения x'
 
     f = (b * x + a) ** 2 / (c + x ** 3) + x ** 4
@@ -38,30 +44,48 @@ def task2():
     'Вывод значения функции'
 
 
+try:
+    task2()
+except ZeroDivisionError:
+    print("делить на ноль нельзя")
+    exit(0)
+
+
 def task3():
-    x = float(input('Произвольное x:'))
+    x = float(input('Введите произвольное x\n'))
     'Ввод произвольного х'
-    f = (abs(math.log((math.cos(x ** 2))))) / (math.sin(x ** 2 + x ** 0.5))
+    f1 = abs(math.log((math.cos(x ** 2))))
+    f2 = math.sin(x ** 2 + x ** 0.5)
+    f = f1 / f2
     'Вычисление значения функции'
 
     print('f(X)=', f)
     'Вывод значения функции'
 
 
+try:
+except ZeroDivisionError:
+    print("делить на ноль нельзя")
+    exit(0)
+except ValueError:
+    print("логарифм <= 0")
+    exit(0)
+
+
 def task4():
-    catet_a = float(input('Произвольное a:'))
-    'Ввод произвольного catet_a'
-    catet_b = float(input('Произвольное b:'))
-    'Ввод произвольного catet_b'
-    gipotinuza_c = float(input('Произвольное c:'))
-    'Ввод произвольного gipotinuza_c'
+    catet_a = float(input('Введите катет a\n'))
+    'Ввод произвольного катета a'
+    catet_b = float(input('Введите катет b\n'))
+    'Ввод произвольного катета b'
+    gipotinuza_c = float(input('Введите гипотинузу c\n'))
+    'Ввод произвольной гипотинузы c'
 
     if gipotinuza_c == (catet_a ** 2 + catet_b ** 2) ** 0.5:
         'Проверка существует ли прямоугольный треугольник'
 
         visota_h = (catet_a * catet_b) / gipotinuza_c
         'Вычисление высоты прямоугольного треугольника'
-        print('visota_h=', visota_h)
+        print('Высота треугольника равна h=', visota_h)
         'Вывод высоты прямоугольного треугольника'
     else:
         print('Прямоугольный треугольник не существует')
@@ -69,36 +93,17 @@ def task4():
 
 
 def task5():
-    x1 = float(input('x1='))
-    'Ввод произвольного значения x1'
-    y1 = float(input('y1='))
-    'Ввод произвольного значения y1'
-    z1 = float(input('z1='))
-    'Ввод произвольного значения z1'
-    x2 = float(input('x2='))
-    'Ввод произвольного значения x2'
-    y2 = float(input('y2='))
-    'Ввод произвольного значения y2'
-    z2 = float(input('z2='))
-    'Ввод произвольного значения z2'
-    x3 = float(input('x3='))
-    'Ввод произвольного значения x3'
-    y3 = float(input('y3='))
-    'Ввод произвольного значения y3'
-    z3 = float(input('z3='))
-    'Ввод произвольного значения z3'
-
-    coord_f1 = [x1, y1, z1]
-    coord_f2 = [x2, y2, z2]
-    coord_f3 = [x3, y3, z3]
-    'Создание списка'
+    coord_f1 = [int(input('Введите x1\n')), int(input('Введите y1\n')), int(input('Введите z1\n'))]
+    coord_f2 = [int(input('Введите x2\n')), int(input('Введите y2\n')), int(input('Введите z2\n'))]
+    coord_f3 = [int(input('Введите x3\n')), int(input('Введите y3\n')), int(input('Введите z3\n'))]
+    'Ввод произвольных x1,y1,z1,x2,y2,z2,x3,y3,z3 и создание списка'
 
     vector_sili_F1 = np.array(coord_f1)
-    'Возвращаем массив'
+    'Создание массива'
     vector_sili_F2 = np.array(coord_f2)
-    'Возвращаем массив'
+    'Создание массива'
     vector_sili_F3 = np.array(coord_f3)
-    'Возвращаем массив'
+    'Создание массива'
 
     ravnodeystv_sila_F = vector_sili_F1 + vector_sili_F2 + vector_sili_F3
     'Находим координаты равнодействующей силы'
@@ -108,36 +113,32 @@ def task5():
 
 
 def task6():
-    radius_R = float(input('Введите R-радиус окружности:'))
+    radius_R = float(input('Введите радиус окружности\n'))
     'Ввод произвольного значения радиуса окружности'
-    storona_a = float(input('Введите a - сторона правильного вписанного многоугольника:'))
+    storona_a = float(input('Введите значение стороны правильного вписанного многоугольника\n'))
     'Ввод произвольного значения стороны правильного вписанного многоугольника'
-    count_n = float(input('Введите n - кол-во сторон многоугольника:'))
+    count_n = float(input('Введите количество сторон многоугольника\n'))
     'Ввод количества сторон многоугольника'
 
     a2n = math.sqrt(2 * radius_R ** 2 - 2 * radius_R * math.sqrt(radius_R ** 2 - (((storona_a ** 2) * count_n) / 4)))
     'Вычисление стороны правильного вписанного многоугольника с удвоенным числом сторон'
 
-    print('a2n(сторона правильного вписанного многоугольника с удвоенным числом сторон =', a2n)
+    print('a2n=', a2n)
     'Вывод стороны правильного вписанного многоугольника с удвоенным числом сторон'
 
 
 def task7():
-    A1 = float(input('A1='))
-    'Ввод произвольного значения A1'
-    B1 = float(input('B1='))
-    'Ввод произвольного значения B1'
-    C1 = float(input('C1='))
-    'Ввод произвольного значения C1'
-    A2 = float(input('A2='))
-    'Ввод произвольного значения A2'
-    B2 = float(input('B2='))
-    'Ввод произвольного значения B2'
-    C2 = float(input('C2='))
-    'Ввод произвольного значения C2'
+    A1 = float(input('Введите A1\n'))
+    B1 = float(input('Введите B1\n'))
+    C1 = float(input('Введите C1\n'))
+    'Ввод произвольных значений A1,B1,C1'
+    A2 = float(input('Введите A2\n'))
+    B2 = float(input('Введите B2\n'))
+    C2 = float(input('Введите C2\n'))
+    'Ввод произвольных значений A2,B2,C2'
 
     if -10 <= A1 <= 10 and -10 <= A2 <= 10 and -10 <= B1 <= 10 and -10 <= B2 <= 10 and -10 <= C1 <= 10 and -10 <= C2 <= 10:
-        'Проверяем находятся ли коэффициенты на промежутке [-10;10]'
+        'Проверяем находятся ли A1,B1,C1,A2,B2,C2 на промежутке [-10;10]'
         D = A1 * B2 - A2 * B1
         'Вычисляем значение D'
         x = (C1 * B2 - C2 * B1) / D
@@ -148,36 +149,40 @@ def task7():
         print('x =', x)
         'Вывод значения x'
         print('y =', round(y, 4))
-        'Вывод значения y'
+        'Вывод значения y, с точностью до 4 цифр в дробной части'
     else:
         print('Введите числа [-10;10]')
         'Вывод ошибки'
 
 
+try:
+    task7()
+except ZeroDivisionError:
+    print("делить на ноль нельзя")
+    exit(0)
+
+
 def task8():
-    Temperature_Celsia = float(input('Введите значение температуры в градусах Цельсия:'))
+    Temperature_Celsia = float(input('Введите Температуру Цельсия\n'))
     'Ввод произвольного значения Температуры Цельсия'
     if 0 <= Temperature_Celsia <= 100:
         'Проверяем соответсвует ли введённое значение промежутку [0;100]'
         Temperature_Farengeita = ((Temperature_Celsia * 9) / 5) + 32
         'Вычисляем значение температуры Фаренгейта'
-        print('Temperatura_Farengeita =', round(Temperature_Farengeita, 4))
+        print('Tf =', round(Temperature_Farengeita, 4))
         'Выводим значение температуры Фаренгейта с точностью до 4 цифр в дробной части'
     else:
-        print('Введите значения [0,100]')
+        print('Введите значения [0,100]\n')
         'Вывод ошибки'
 
 
 def task9():
-    rubles = float(input('Введите рубли:'))
+    rubles = float(input('Введите сумму рублей:\n'))
     'Ввод произвольного значения суммы в рублях'
-    curse_dollars = float(input('Введите курс доллара:'))
+    curse_dollars = float(input('Введите курс доллара:\n'))
     'Ввод курса доллара'
-    comissiya = float(input('Введите процент:'))
+    comissiya = float(input('Введите процент:\n'))
     'Ввод комиссии'
     dollars = abs(rubles / curse_dollars - ((rubles / curse_dollars) * comissiya / 100))
     'Перевод рублей в доллары'
     print('dollars = ', round(dollars, 4))
-
-
-task1()
