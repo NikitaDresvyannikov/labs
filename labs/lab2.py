@@ -45,6 +45,27 @@ def task2():
     plt.show()
 
 
+def task3():
+    number = float(input('Введите число:\n'))
+    base = int(input('Введите основание новой СС:\n'))
+
+
+    def decimnal_in_new_numeral_system(number, base):
+        result = ''
+        while number > 0:
+            number_2 = int(number * base)
+            if number_2 >= base:
+                number_2 = number_2 - 1
+            result += str(number_2)
+            number = (number * base) % 1
+        return result
+
+
+    new_number = decimnal_in_new_numeral_system(number, base)
+
+    print('Новое число:\n', new_number)
+
+
 def task5():
     pr = 1
     cnt = 0
@@ -114,22 +135,3 @@ def task9():
                 j_itog = k_itog
                 sum3 += j_itog
     print('Ответ третьего выражения:',sum3)
-
-number = float(input('Введите число:\n'))
-base = int(input('Введите основание новой СС:\n'))
-
-
-def decimnal_in_new_numeral_system(number, base):
-    result = ''
-    while number > 0:
-        number_2 = int(number * base)
-        if number_2 >= base:
-            number_2 = number_2 - 1
-        result += str(number_2)
-        number = (number * base) % 1
-    return result[::-1]
-
-
-new_number = decimnal_in_new_numeral_system(number, base)
-
-print('Новое число:\n', new_number)
