@@ -65,6 +65,46 @@ def task3():
 
     print('Новое число:\n', new_number)
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def task4():
+    alpha = np.linspace(0, np.pi, 150)
+
+    radius = 2
+
+    a1 = radius * np.cos(alpha) - 1
+    b1 = radius * np.sin(alpha) + 3
+    x1 = [1,1,0,-3]
+    y1 = [3,1,-1,3]
+    ax = plt.subplot()
+    ax.plot(a1, b1, color='black')
+    ax.plot(x1, y1, color='black')
+    ax.set_aspect(1)
+
+    alpha2 = np.linspace(np.pi, 2*np.pi, 150)
+    radius = 2
+
+    a2 = radius * np.cos(alpha2) + 5
+    b2 = radius * np.sin(alpha2)
+    x2=[3,5,7]
+    y2=[0,2,0]
+    ax.plot(a2, b2, color='black')
+    ax.plot(x2, y2, color='black')
+    plt.grid()
+    plt.title('Task 4')
+    plt.show()
+def popadanie_tochki(x, y, polygon):
+    n = len(polygon)
+    inside = False
+    
+    p1x, p1y = polygon[0]
+    for i in range(n+1):
+        p2x, p1y = polygon[i % n]
+        if y > min(p1y)
+        
+task4()
 
 def task5():
     pr = 1
