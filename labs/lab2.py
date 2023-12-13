@@ -175,3 +175,42 @@ def task9():
                 j_itog = k_itog
                 sum3 += j_itog
     print('Ответ третьего выражения:',sum3)
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def f(x):
+    return np.sin(x) - x**2
+
+
+def grafik():
+
+    axes = plt.subplot()
+    x_vector = np.linspace(1, 2, 100)
+    y_vector = f(x_vector)
+    axes.plot(x_vector, y_vector, color='red')
+    axes.plot([1,2], [0,0], color='k')
+    axes.plot([1,1], [0, f(1)], color='k', linestyle= '--')
+    axes.plot([2,2], [0,f(2)], color = 'gray')
+    plt.show()
+
+
+def area_figure(a,b, n = 100000):
+    h = (b - a) / n
+    x_i = []
+    for multiplier in range(n):
+        x_i.append(a+(h * multiplier))
+
+    area = 0
+    for i in range(1,len(x_i)):
+        area += (f(x_i[i]) + f(x_i[i-1]))/2 * h
+    if area > 0:
+        print(area)
+    else:
+        print(abs(area))
+
+
+area_figure(1,2)
+grafik()
