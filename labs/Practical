@@ -90,4 +90,3 @@ main_window = MainWindow()
 main_window.show()
 # Запустить приложение
 app.exec_()
-https://github.com/s3ish1ro/informatics/tree/main
