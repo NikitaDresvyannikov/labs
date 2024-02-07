@@ -1,8 +1,18 @@
-from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow, QPushButton, QFormLayout, QWidget, QComboBox)
+from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow, QPushButton, QFormLayout, QWidget, QComboBox, QMessageBox)
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
+
+class ErrorWindow(QMessageBox):
+
+
+message = QMessageBox()
+message.setWindowTitle('Ошибка')
+message.setText('Функция неверна')
+message.setIcon(QMessageBox.Warning)
+message.show()
+message.exec()
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -12,13 +22,14 @@ class MainWindow(QMainWindow):
         self.fig = plt.figure()
         self.canvas = FigureCanvas(self.fig)
 
-        cental_widget = QWidget()
+        central_widget = QWidget()
         layout = QFormLayout()
-        cental_widget.setLayout(layout)
+        central_widget.setLayout(layout)
+
 
         layout.addWidget(self.canvas)
 
-        self.setCentralWidget(cental_widget)
+        self.setCentralWidget(central_widget)
 
         self.plot_button = QPushButton('Нарисовать график')
         self.plot_button.clicked.connect(self.plot_data)
@@ -52,6 +63,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.clear_button)
         layout.addWidget(self.file_button)
         layout.addRow(self.add_function_button, self.function_input)
+
 
     def vectors(self):
         try:
