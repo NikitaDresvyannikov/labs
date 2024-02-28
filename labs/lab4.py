@@ -1,17 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from PyQt5.QtWidgets import (QMainWindow, QWidget, QFormLayout, QPushButton, QLabel, QLineEdit, QApplication, QComboBox, QTableWidget, QTableWidgetItem)
+
 
 class MainWindow(QMainWindow):
-    def init(self, parent = None):
-        super(MainWindow, self).init(parent)
-
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
 
         self.setWindowTitle('Проверка попадания точки')
         self.fig = plt.figure()
         self.canvas = FigureCanvas(self.fig)
-        
 
         central_widget = QWidget()
         layout = QFormLayout()
         central_widget.setLayout(layout)
+        
+        items = {'выше', 'ниже'
+            
+        }
+        table = QTableWidget(self)
+        table.setColumnCount(4)
+        table.setRowCount(1)
+        table.setHorizontalHeaderLabels('k', 'степень x', 'b', 'выше/ниже')
+        table.horizontalHeaderItem(0).setToolTip('k')
+        table.horizontalHeaderItem(1).setToolTip('степень x')
+        table.horizontalHeaderItem(2).setToolTip('b')
+        self.combobox = QComboBox(self, 200)
+        self.combobox.addItems(self.items)
+
+
+
+
 
         layout.addWidget(self.canvas)
         self.setCentralWidget(central_widget)
@@ -19,15 +39,16 @@ class MainWindow(QMainWindow):
         self.check_point = QPushButton('Проверка точки')
         self.check_point.clicked.connect(self.check_points)
         self.clear_button = QPushButton('Очистить график')
-        self.check_point.clicked.connect(self.clear)
+        self.clear_button.clicked.connect(self.clear)
         self.range_label = QLabel('Введите координаты точки:')
-        self.range_start_input = QLineEdit('0')
-        self.range_end_input = QLineEdit('1')
+        self.range_start_input = QLineEdit()
+        self.range_end_input = QLineEdit()
 
         layout.addRow(self.range_label)
         layout.addRow(self.range_start_input, self.range_end_input)
         layout.addWidget(self.check_point)
         layout.addWidget(self.clear_button)
+
         self.grafik()
 
     def grafik(self):
@@ -50,16 +71,22 @@ class MainWindow(QMainWindow):
         ax.plot(a2, b2, color='black')
         ax.plot(x2, y2, color='black')
         plt.grid()
-        plt.title('Grafik')
+        plt.title('ctg')
         self.canvas.draw()
 
     def check_points(self):
+        ax = plt.subplot()
+
         def fig1_check(x, y):
+            k = self.table.item().text()
+            n = self.table.item().text()
+            b = self.table.item().text()
+            if
 
             r = 2
-            if (x + 1)  2 + (y-3)  2 <= r  2 and x <= 1:
+            if (x + 1)**2 + (y-3)**2 <= r**2 and x <= 1:
                 return True
-            elif x >= 1 and 3 >= y >= -4 / 3 * x - 1 and y >= 2 * x - 1:
+            elif x <= 1 and 3 >= y >= (-4 / 3) * x - 1 and y >= 2 * x - 1:
                 return True
             else:
                 return False
@@ -67,19 +94,20 @@ class MainWindow(QMainWindow):
         def fig2_check(x, y):
 
             r = 2
-            if (x - 5)  2 + y  2 <= r  2 and y < 0:
+            if (x - 5)**2 + y**2 <= r**2 and y < 0:
                 return True
             elif x - 3 >= y >= 0 and y <= -x + 7:
                 return True
             else:
                 return False
+
         x, y = map(float, [self.range_start_input.text(), self.range_end_input.text()])
         if fig1_check(x, y):
-            plt.scatter(x, y, color='black')
+            ax.scatter(x, y, color="green")
         elif fig2_check(x, y):
-            plt.scatter(x, y, color='black')
+            ax.scatter(x, y, color='blue')
         else:
-            plt.scatter(x, y, color='black')
+            ax.scatter(x, y, color='red')
         self.canvas.draw()
 
     def clear(self):
@@ -92,3 +120,6 @@ app = QApplication([])
 main_window = MainWindow()
 main_window.show()
 app.exec()
+
+
+
