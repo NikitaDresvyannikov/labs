@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QFormLayout, QPushButton, QLabel, QLineEdit, QApplication, QComboBox, QTableWidget, QTableWidgetItem)
-from PyQt5.QtCore import (QSize, Qt)
-
+import random
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -26,8 +25,12 @@ class MainWindow(QMainWindow):
         self.clear_button = QPushButton('Очистить график')
         self.clear_button.clicked.connect(self.clear)
 
+        self.point_random = QPushButton('Рандомная точка')
+        self.point_random.clicked.connect(self.random_points)
+
         self.add_curve = QPushButton('Добавить кривую')
         self.add_curve.clicked.connect(self.add_curves)
+
 
         self.range_label = QLabel('Введите координаты точки:')
         self.range_start_input = QLineEdit()
@@ -48,6 +51,7 @@ class MainWindow(QMainWindow):
         layout.addRow(self.range_start_input, self.range_end_input)
         layout.addWidget(self.check_point)
         layout.addWidget(self.clear_button)
+        layout.addWidget(self.point_random)
         layout.addRow(self.table)
         layout.addWidget(self.add_curve)
 
@@ -55,27 +59,11 @@ class MainWindow(QMainWindow):
         self.grafik()
 
     def grafik(self):
-        alpha = np.linspace(0, np.pi, 150)
-        radius = 2
-        a1 = radius * np.cos(alpha) - 1
-        b1 = radius * np.sin(alpha) + 3
-        x1 = [1, 1, 0, -3]
-        y1 = [3, 1, -1, 3]
-        ax = plt.subplot()
-        ax.plot(a1, b1, color='black')
-        ax.plot(x1, y1, color='black')
-        ax.set_aspect(1)
-        alpha2 = np.linspace(np.pi, 2 * np.pi, 150)
-        radius = 2
-        a2 = radius * np.cos(alpha2) + 5
-        b2 = radius * np.sin(alpha2)
-        x2 = [3, 5, 7]
-        y2 = [0, 2, 0]
-        ax.plot(a2, b2, color='black')
-        ax.plot(x2, y2, color='black')
-        plt.grid()
-        plt.title('ctg')
+        plt.grid(True)
+        plt.title('График')
         self.canvas.draw()
+        plt.xlabel('x')
+        plt.ylabel('y')
 
     def check_points(self):
         ax = plt.subplot()
@@ -112,20 +100,29 @@ class MainWindow(QMainWindow):
         for ax in self.fig.axes:
             ax.clear()
         self.grafik()
-    
 
     def add_curves(self):
-        k = self.table.item(0, 0).text()
-        n = self.table.item(0, 1).text()
-        b = self.table.item(0, 2).text()
-        self.section.append([k,n,b])
-        self.centralWidget().layout().itemAt(0).widget().draw()
+        k = float(self.table.item(0, 0).text())
+        n = float(self.table.item(0, 1).text())
+        b = float(self.table.item(0, 2).text())
 
+        x = np.linspace(-1, 1, 25)
+        y = k * x ** (n) + b
 
+        plt.plot(x, y, color='black')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.grid(True)
+        self.canvas.draw()
+    def random_points(self):
+        coords = []
+        coordinates = random.randint(1, 1)
+        for i in range(coordinates):
+            coords.append([random.randint(-1, 1), random.randint(-1, 1)])
+        for point in coords:
+            plt.scatter(point[0], point[1], color='g')
 
-
-
-
+        self.canvas.draw()
 
 app = QApplication([])
 main_window = MainWindow()
