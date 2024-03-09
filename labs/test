@@ -1,1 +1,222 @@
+from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow, QPushButton, QFormLayout, QWidget, QComboBox, QMessageBox)
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
+
+class MainWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+
+        self.setWindowTitle('График')
+        self.fig = plt.figure()
+        self.canvas = FigureCanvas(self.fig)
+
+        cental_widget = QWidget()
+        layout = QFormLayout()
+        cental_widget.setLayout(layout)
+
+        layout.addWidget(self.canvas)
+
+        self.setCentralWidget(cental_widget)
+
+        self.plot_button1 = QPushButton('Нарисовать график')
+        self.plot_button1.clicked.connect(self.plot_data1)
+        self.plot_button2 = QPushButton('Нарисовать график')
+        self.plot_button2.clicked.connect(self.plot_data2)
+
+        self.check_point = QPushButton('Проверить точку')
+        self.check_point.clicked.connect(self.proverka)
+
+        self.range_label = QLabel('Диапазон:')
+        self.range_start_input = QLineEdit('0')
+        self.range_end_input = QLineEdit('1')
+        self.range_start_input.setFixedSize(50, 25)
+        self.range_end_input.setFixedSize(50,25)
+
+        self.point_range = QLabel('Координаты точки')
+        self.start_point_range = QLineEdit()
+        self.end_point_range = QLineEdit()
+        self.start_point_range.setFixedSize(50, 25)
+        self.end_point_range.setFixedSize(50, 25)
+
+        self.add_function_button1 = QPushButton('Добавить функцию в первый список')
+        self.function_input1 = QLineEdit(' Введите функцию для добавление в список ')
+        self.function_label1 = QLabel('Список функций')
+        self.function_widget1 = QComboBox()
+        self.function_widget1.addItems(['x', '2*x', 'x**2', 'x**3'])
+        self.add_function_button1.clicked.connect(self.add_function1)
+        self.add_function_button2 = QPushButton('Добавить функцию во второй список')
+        self.function_input2 = QLineEdit(' Введите функцию для добавление в список ')
+        self.function_label2 = QLabel('Список функций')
+        self.function_widget2 = QComboBox()
+        self.function_widget2.addItems(['x', '2*x', 'x**2', 'x**3'])
+        self.add_function_button2.clicked.connect(self.add_function2)
+
+        self.hl_widget1 = QComboBox()
+        self.hl_widget1.addItems(['ВЫШЕ', 'НИЖЕ'])
+        self.hl_widget2 = QComboBox()
+        self.hl_widget2.addItems(['ВЫШЕ', 'НИЖЕ'])
+
+        self.clear_button = QPushButton('Очистить график')
+        self.clear_button.clicked.connect(self.clear_plot)
+
+        self.error_message = QMessageBox()
+        self.error_message.setText("Функция введена неверно!")
+        self.error_message.setWindowTitle('Ошибка!')
+
+        layout.addRow(self.function_label1)
+        layout.addWidget(self.function_widget1)
+        layout.addWidget(self.plot_button1)
+        layout.addWidget(self.hl_widget1)
+        layout.addRow(self.function_label2)
+        layout.addWidget(self.function_widget2)
+        layout.addWidget(self.plot_button2)
+        layout.addWidget(self.hl_widget2)
+        layout.addRow(self.range_label)
+        layout.addRow(self.range_start_input, self.range_end_input)
+        layout.addRow(self.point_range)
+        layout.addRow(self.start_point_range, self.end_point_range)
+        layout.addWidget(self.check_point)
+        layout.addWidget(self.clear_button)
+        layout.addRow(self.add_function_button1, self.function_input1)
+        layout.addRow(self.add_function_button2, self.function_input2)
+
+    def vectors1(self):
+        try:
+            expression = self.function_widget1.currentText()
+        except NameError:
+            expression = 'x'
+
+        try:
+            range_start = float(self.range_start_input.text())
+            range_end = float(self.range_end_input.text())
+        except ValueError:
+            range_start = 0
+            range_end = 1
+
+        functions = {}
+        try:
+            exec(f'def f(x): return {expression}', functions)
+            x = np.linspace(range_start, range_end)
+            function = functions['f']
+            y = [function(value) for value in x]
+            return x, y
+
+        except NameError:
+            self.error_message.show()
+            return 0
+        except SyntaxError:
+            self.error_message.show()
+            return 0
+
+    def vectors2(self):
+        try:
+            expression = self.function_widget2.currentText()
+        except NameError:
+            expression = 'x'
+
+        try:
+            range_start = float(self.range_start_input.text())
+            range_end = float(self.range_end_input.text())
+        except ValueError:
+            range_start = 0
+            range_end = 1
+
+        functions = {}
+        try:
+            exec(f'def f(x): return {expression}', functions)
+            x = np.linspace(range_start, range_end)
+            function = functions['f']
+            y = [function(value) for value in x]
+            return x, y
+
+        except NameError:
+            self.error_message.show()
+            return 0
+        except SyntaxError:
+            self.error_message.show()
+            return 0
+
+    def plot_data1(self):
+        if self.vectors1() != 0:
+            x, y = self.vectors1()
+            axes = plt.subplot()
+            axes.plot(x, y)
+            plt.grid(True)
+            plt.xlabel('x')
+            plt.ylabel('y')
+
+            self.centralWidget().layout().itemAt(0).widget().draw()
+
+    def plot_data2(self):
+        if self.vectors2() != 0:
+            x, y = self.vectors2()
+            axes = plt.subplot()
+            axes.plot(x, y)
+            plt.grid(True)
+            plt.xlabel('x')
+            plt.ylabel('y')
+
+            self.centralWidget().layout().itemAt(0).widget().draw()
+
+    def check_points1(self):
+        y_point_str = self.end_point_range.text()
+        try:
+            y_point = float(y_point_str)
+        except ValueError:
+            print("Ошибка: Некорректное значение для y_point")
+            return False
+
+        hl = self.hl_widget1.currentText()
+        if hl == 'ВЫШЕ':
+            return y_point <= float(self.function_widget1.currentText())
+        else:
+            return y_point >= float(self.function_widget1.currentText())
+
+    def check_points2(self):
+        y_point_str = self.end_point_range.text()
+        try:
+            y_point = float(y_point_str)
+        except ValueError:
+            print("Ошибка: Некорректное значение для y_point")
+            return False
+
+        hl = self.hl_widget2.currentText()
+        if hl == 'ВЫШЕ':
+            return y_point <= float(self.function_widget2.currentText())
+        else:
+            return y_point >= float(self.function_widget2.currentText())
+
+    def proverka(self):
+        g = self.check_points1()
+        t = self.check_points2()
+
+        x_point = float(self.start_point_range.text())
+        y_point = float(self.end_point_range.text())
+
+        if t and g:
+            plt.scatter(x_point, y_point, color='green')
+        else:
+            plt.scatter(x_point, y_point, color='red')
+
+        self.canvas.draw()
+
+    def clear_plot(self):
+        for ax in self.fig.axes:
+            ax.clear()
+        plt.grid(True)
+        self.canvas.draw()
+
+    def add_function1(self):
+        text_x = self.function_input1.text()
+        self.function_widget1.addItems([text_x])
+
+    def add_function2(self):
+        text_x = self.function_input2.text()
+        self.function_widget2.addItems([text_x])
+
+app = QApplication([])
+main_window = MainWindow()
+main_window.show()
+app.exec()
