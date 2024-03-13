@@ -88,3 +88,63 @@ main_window = MainWindow()
 main_window.show()
 app.exec()
 
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import numpy as np
+from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow, QPushButton, QFormLayout, QWidget, QComboBox, QMessageBox, QTableWidget)
+
+def task3():
+    class MainWindow(QMainWindow):
+        def __init__(self, parent=None):
+            super(MainWindow, self).__init__(parent)
+
+            self.setWindowTitle('График')
+            self.fig = plt.figure()
+            self.canvas = FigureCanvas(self.fig)
+
+            cental_widget = QWidget()
+            layout = QFormLayout()
+            cental_widget.setLayout(layout)
+
+            layout.addWidget(self.canvas)
+
+            self.setCentralWidget(cental_widget)
+
+            self.clear_button = QPushButton('Очистить график')
+            self.clear_button.clicked.connect(self.clear_plot)
+
+            self.table1 = QTableWidget()
+            self.table1.setRowCount(2)
+            self.table1.setColumnCount(5)
+            self.table1.setHorizontalHeaderLabels(['X', 'Y', 'L', 'H', 'A'])
+            self.table1.setFixedSize(550,100)
+
+            self.table2 = QTableWidget()
+            self.table2.setRowCount(2)
+            self.table2.setColumnCount(3)
+            self.table2.setHorizontalHeaderLabels(['Тип объекта', 'X2', 'Y2'])
+            self.table2.setFixedSize(550, 100)
+
+            layout.addRow(self.table1)
+            layout.addRow(self.table2)
+            layout.addWidget(self.clear_button)
+
+
+            plt.grid(True)
+            self.centralWidget().layout().itemAt(0).widget().draw()
+
+        def create_object(self):
+
+
+
+
+
+
+
+    app = QApplication([])
+    main_window = MainWindow()
+    main_window.show()
+    app.exec()
+task3()
+
+def task2():
