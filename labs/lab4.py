@@ -93,6 +93,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QFormLayout, QPushButton, QLabel, QLineEdit, QApplication, QComboBox, QTableWidget, QTableWidgetItem)
 from matplotlib.patches import Rectangle
+from PIL import Image
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -105,8 +106,8 @@ class MainWindow(QMainWindow):
         cental_widget = QWidget()
         layout = QFormLayout()
         cental_widget.setLayout(layout)
-
-
+        self.img = Image.open(r'C:\Users\user.AD\Desktop\white_background.PNG')
+        self.img.thumbnail((500,500))
 
         self.setCentralWidget(cental_widget)
 
@@ -118,22 +119,21 @@ class MainWindow(QMainWindow):
 
         self.table2 = QTableWidget()
         self.table2.setRowCount(2)
-        self.table2.setColumnCount(3)
+        self.table2.setColumnCount(4)
         self.table2.setHorizontalHeaderLabels(['Тип объекта', 'X2', 'Y2', 'R'])
         self.table2.setFixedSize(550, 100)
 
-        self.create_object_button = QPushButton('создать объект')
+        self.create_object_button = QPushButton('создать')
         self.create_object_button.clicked.connect(self.create_object)
 
-        self.create_ns_pv_button = QPushButton('создать')
-        self.create_ns_pv_button.clicked.connect(self.create_object1)
+        self.create_ns_pv_button = QPushButton('создать объект')
+        self.create_ns_pv_button.clicked.connect(self.create_circle)
 
         plt.grid(True)
 
         layout.addRow(self.table1, self.table2)
-        layout.addWidget(self.create_object_button)
+        layout.addRow(self.create_object_button, self.create_ns_pv_button)
         layout.addRow(self.canvas)
-        layout.addWidget(self.create_ns_pv_button)
 
         for i in range(self.table2.rowCount()+1):
             self.table2_widget = QComboBox()
@@ -141,15 +141,16 @@ class MainWindow(QMainWindow):
             self.table2.setCellWidget(i, 0, self.table2_widget)
 
     def create_object(self):
-        x = float(self.table1.item(0, 0).text())
+        x = float(self.table1.item(0,0).text())
         y = float(self.table1.item(0,1).text())
         l = float(self.table1.item(0,2).text())
         h = float(self.table1.item(0,3).text())
         a = float(self.table1.item(0,4).text())
 
         ax = plt.subplot()
+        ax.imshow(self.img)
 
-        rect = Rectangle((x,y), l, h, linewidth=1, edgecolor='black', facecolor=None, angle=a)
+        rect = Rectangle((x,y), l, h, linewidth=1, edgecolor='black', facecolor='white', angle=a)
         ax.add_patch(rect)
         self.canvas.draw()
 
@@ -159,17 +160,33 @@ class MainWindow(QMainWindow):
         r = float(self.table2.item(0,3).text())
 
         ax = plt.subplot()
-
+        ax.imshow(self.img)
         circle = plt.Circle((x2,y2), linewidth=1, edgecolor='red', facecolor='red', radius=r)
         ax.add_patch(circle)
         self.canvas.draw()
 
+    def create_object2(self):
+        x2 = float(self.table2.item(0,1).text())
+        y2 = float(self.table2.item(0,2).text())
 
+        ax = plt.subplot()
+        ax.imshow(self.img)
+        circle = plt.Circle((x2,y2), linewidth=1, edgecolor='green', facecolor='green', radius=5)
+        ax.add_patch(circle)
+        self.canvas.draw()
 
+    def create_circle(self):
+        obj = str(self.table2.cellWidget(0,0).currentText())
+        if obj == 'ПВ':
+            self.create_object1()
+        else:
+            self.create_object2()
+        self.canvas.draw()
 
 
 app = QApplication([])
 main_window = MainWindow()
 main_window.show()
 app.exec()
+
 
