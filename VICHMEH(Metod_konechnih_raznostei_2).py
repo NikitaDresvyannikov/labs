@@ -52,3 +52,64 @@ print('\n')
 for i in range(len(n_gilb)):
     print(*np.sqrt(n_gilb[i]))
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+a = 1
+b = 2
+n = 10
+A = 0
+B = 0
+alpha_0 = 1
+alpha_1 = 0
+betta_0 = 0
+betta_1 = 1
+
+
+
+def P(x):
+    return -1/x
+def F(x):
+    return x
+def Q(x):
+    return 0
+
+y=[]
+
+for j in range(4):
+    x_i = np.linspace(a, b, n+1)
+    K = np.zeros((n+1, n+1))
+    M = np.zeros(n+1)
+    h = (b - a) / n
+
+    for i in range(1, n):
+        K[i][i - 1] = 1/h**2 + P(x_i[i])/(2*h)
+        K[i][i] = Q(x_i[i]) - 2/(h**2)
+        K[i][i + 1] = 1/(h**2) + P(x_i[i])/(2*h)
+        if i == 1:
+            M[i] = A
+        elif i == n:
+            M[i] = B
+        else:
+            M[i] = F(x_i[i])
+    K[0][0] = (alpha_0 * h - alpha_1)/h
+    K[0][1] = alpha_1/h
+    K[n][n - 1] = - betta_1/h
+    K[n][n] = (betta_0 * h + betta_1)/h
+    y.append(np.dot(np.linalg.inv(K), M))
+    n*=2
+    plt.plot(x_i, y[j].transpose()[0])
+g = []
+
+for k in range(len(y)-1):
+    g0 = 0
+    for i in range(len(y[k])):
+        g0 += (y[k][i]-y[k + 1][2 * i])**2 * h
+    g.append(g0)
+print(np.sqrt(g))
+
+
+
+
+plt.grid(True)
+plt.show()
